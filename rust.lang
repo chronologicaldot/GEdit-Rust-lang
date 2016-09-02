@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language id="rust" _name="Rust" version="2.0" _section="Sources">
+<metadata>
+	<property name="mimetypes">text/x-c;text/x-csrc</property>
+	<property name="globs">*.rs</property>
+</metadata>
+<styles>
+	<style id="comment" _name="Comment" map-to="def:comment" />
+	<style id="string" _name="String" map-to="def:string" />
+	<style id="escaped-character" _name="Escaped Character" map-to="def:special-char" />
+	<style id="preprocessor" _name="Preprocessor" map-to="def:preprocessor" />
+	<style id="included-file" _name="Included File" map-to="def:string" />
+	<style id="char" _name="Character" map-to="def:character" />
+	<style id="keyword" _name="Keyword" map-to="def:keyword" />
+	<style id="datatype" _name="Data Type" map-to="def:type" />
+	<style id="builtin-func" _name="Built-in Function" map-to="def:builtin" />
+	<style id="builtin-struct" _name="Built-in Struct" map-to="def:builtin" />
+	<style id="number" _name="Number" map-to="def:number" />
+	<style id="constant" _name="Constant" map-to="def:constant" />
+</styles>
+<definitions>
+	<context id="rust">
+		<include>
+			<context id="comment" style-ref="comment">
+				<start>\/\/</start>
+				<end>$</end>
+			</context>
+
+			<context id="string" end-at-line-end="false" style-ref="string">
+				<start>"</start>
+				<end>"</end>
+				<include>
+					<context id="escape" style-ref="escaped-character">
+						<match>\\.</match>
+					</context>
+				</include>
+			</context>
+
+			<context id="comment-multiline" style-ref="comment">
+				<start>/\*</start>
+				<end>\*/</end>
+				<include>
+					<context ref="def:in-comment" />
+				</include>
+			</context>
+
+			<context id="chars" end-at-line-end="true" style-ref="char" >
+				<start>'</start>
+				<end>[\w]{0,}'{0,1}</end>
+			</context>
+
+			<context id="numbers" style-ref="number">
+                <match extended="true">
+                    (?&lt;![\w\.])
+                    [0-9]+([.]{1,1}[0-9]+)?
+                </match>
+			</context>
+
+			<context id="numeric-suffix" style-ref="number">
+                <match extended="true">
+                    (?&lt;=\w\.)
+                    [0-9]?
+					(?![\w\.])
+                </match>
+			</context>
+
+			<context id="keywords" style-ref="keyword">
+				<keyword>let</keyword>
+				<keyword>if</keyword>
+				<keyword>else</keyword>
+				<keyword>for</keyword>
+				<keyword>in</keyword>
+				<keyword>while</keyword>
+				<keyword>loop</keyword>
+				<keyword>match</keyword>
+				<keyword>continue</keyword>
+				<keyword>return</keyword>
+				<keyword>range</keyword>
+				<keyword>fn</keyword>
+				<keyword>struct</keyword>
+				<keyword>enum</keyword>
+				<keyword>trait</keyword>
+				<keyword>impl</keyword>
+				<keyword>where</keyword>
+				<keyword>self</keyword>
+				<keyword>super</keyword>
+				<keyword>mut</keyword>
+				<keyword>ref</keyword>
+				<keyword>move</keyword>
+				<keyword>type</keyword>
+				<keyword>as</keyword>
+				<keyword>const</keyword>
+				<keyword>static</keyword>
+				<keyword>unsafe</keyword>
+				<keyword>pub</keyword>
+				<keyword>use</keyword>
+				<keyword>import</keyword>
+				<keyword>extern crate</keyword>
+			</context>
+
+			<context id="builtin-funcs" style-ref="builtin-func">
+				<keyword>try!</keyword>
+				<keyword>print!</keyword>
+				<keyword>println!</keyword>
+				<keyword>write!</keyword>
+				<keyword>format!</keyword>
+				<keyword>panic!</keyword>
+			</context>
+
+			<context id="builtin-structs" style-ref="builtin-struct">
+				<keyword>Some</keyword>
+				<keyword>Option</keyword>
+				<keyword>None</keyword>
+				<keyword>Vec</keyword>
+			</context>
+
+			<context id="types" style-ref="datatype">
+				<keyword>i8</keyword>
+				<keyword>i16</keyword>
+				<keyword>i32</keyword>
+				<keyword>i64</keyword>
+				<keyword>isize</keyword>
+				<keyword>u8</keyword>
+				<keyword>u16</keyword>
+				<keyword>u32</keyword>
+				<keyword>u64</keyword>
+				<keyword>usize</keyword>
+				<keyword>f32</keyword>
+				<keyword>f64</keyword>
+				<keyword>char</keyword>
+				<keyword>bool</keyword>
+			</context>
+
+			<context id="constants" style-ref="constant">
+				<keyword>true</keyword>
+				<keyword>false</keyword>
+			</context>
+
+			<context id="preprocessors" style-ref="preprocessor">
+				<start>^#\!{0,1}\[</start>
+				<end>\]</end>
+			</context>
+		</include>
+	</context>
+</definitions>
+</language>
